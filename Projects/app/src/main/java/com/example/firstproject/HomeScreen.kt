@@ -47,7 +47,9 @@ fun HomeScreen(navController: NavController) {
         val viewModelCart: CartViewModel = viewModel()
         val carts = viewModelCart.cart.observeAsState(listOf()).value
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 56.dp)
         ) {
             Text(text = "My data")
             Spacer(modifier = Modifier.padding(bottom = 16.dp))
@@ -69,7 +71,7 @@ fun CartList(
     LazyColumn {
         items(carts) { cart ->
 
-            val name = rememberSaveable {
+            val isDoneCheck = rememberSaveable {
                 mutableStateOf(cart.isDone)
             }
 
@@ -88,13 +90,11 @@ fun CartList(
 
                 trailing = {
                     Checkbox(
-                        checked = name.value,
+                        checked = isDoneCheck.value,
                         onCheckedChange = {
-                            name.value = it
-                            cart.isDone = name.value
+                            isDoneCheck.value = it
+                            cart.isDone = isDoneCheck.value
                             cartView.updateCart(cart)
-
-                            Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show()
                         },
                     )
                 }

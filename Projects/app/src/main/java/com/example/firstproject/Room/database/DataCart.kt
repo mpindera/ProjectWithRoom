@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "DataCart")
 data class DataCart(
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     val id: Int = 0,
 
     @ColumnInfo(name = "name")

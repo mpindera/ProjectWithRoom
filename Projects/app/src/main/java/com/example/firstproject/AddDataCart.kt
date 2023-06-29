@@ -42,7 +42,7 @@ fun AddDataCart(navController: NavController) {
             )
         )
 
-        TextFieldAddingData(textFields = textFields, cartViewModel = CartViewModel(Application()))
+        TextFieldAddingData(textFields = textFields, cartViewModel = CartViewModel(Application()),navController)
 
     }
 }

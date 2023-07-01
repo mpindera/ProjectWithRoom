@@ -22,7 +22,8 @@ import com.example.firstproject.textfields.TextFieldConfig
 fun AddDataCart(navController: NavController) {
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -42,7 +43,11 @@ fun AddDataCart(navController: NavController) {
             )
         )
 
-        TextFieldAddingData(textFields = textFields, cartViewModel = CartViewModel(Application()),navController)
+        TextFieldAddingData(
+            textFields = textFields,
+            cartViewModel = CartViewModel(Application()),
+            navController
+        )
 
     }
 }

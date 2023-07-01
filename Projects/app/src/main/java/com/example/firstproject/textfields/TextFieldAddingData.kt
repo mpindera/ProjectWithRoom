@@ -53,7 +53,7 @@ fun TextFieldAddingData(
         mutableStateOf(TextFieldValue())
     }
 
-    var isDoneCheck by remember {
+    val isDoneCheck by remember {
         mutableStateOf(false)
     }
 

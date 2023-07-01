@@ -4,19 +4,14 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -31,6 +26,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.firstproject.ui.theme.FirstProjectTheme
+import com.example.firstproject.ui.theme.darkGrey
+import com.example.firstproject.ui.theme.darkWhite
 
 class MainActivity : ComponentActivity() {
 
@@ -56,9 +53,12 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun NavigationAppHost(navController: NavHostController) {
+    val darkTheme: Boolean = isSystemInDarkTheme()
+    val color: Color = if (darkTheme) darkGrey else darkWhite
+
     Scaffold(
         bottomBar = {
-            BottomNavigation(backgroundColor = Color(0xFF917E7E)) {
+            BottomNavigation(backgroundColor = color) {
                 val navBackStackEntry = navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry.value?.destination
 

@@ -17,15 +17,19 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = lightGrey, // up , on checkBox
+    onPrimary = white,
+    onBackground = white,
+    background = darkBlack, // bc
+
 )
 
+
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40,
+    primary = black, // up , on checkBox
+    onPrimary = white,
+    onBackground = black,
+    background = lightWhite, // bc
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -33,8 +37,8 @@ private val LightColorScheme = lightColorScheme(
     onPrimary = Color.White,
     onSecondary = Color.White,
     onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-      */
+    onBackground = Color(0xFF1C1B1F), // color Text
+     */
 
 
 )

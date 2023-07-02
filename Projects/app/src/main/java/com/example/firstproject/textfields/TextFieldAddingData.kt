@@ -4,6 +4,9 @@ import android.provider.ContactsContract.Data
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -22,9 +25,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -34,6 +40,8 @@ import androidx.navigation.NavController
 import com.example.firstproject.Destination
 import com.example.firstproject.Room.database.CartViewModel
 import com.example.firstproject.Room.database.DataCart
+import com.example.firstproject.ui.theme.darkerGrey
+import com.example.firstproject.ui.theme.white
 
 data class TextFieldConfig(
     val label: String,
@@ -57,9 +65,22 @@ fun TextFieldAddingData(
         mutableStateOf(false)
     }
 
-    Column {
+    val maxLength = 30
+
+    val darkTheme: Boolean = isSystemInDarkTheme()
+    val color: Color = if (darkTheme) darkerGrey else white
+
+
+
+    Column(
+        modifier = Modifier
+            .background(color)
+            .padding(bottom = 15.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         textFields.forEach { config ->
-            val maxLength = 30
+
             OutlinedTextField(
                 value = textFieldValue.text,
                 onValueChange = { newValue ->
@@ -74,8 +95,9 @@ fun TextFieldAddingData(
                     unfocusedBorderColor = config.unfocusedBorderColor,
                     textColor = config.textColor
                 ),
-                modifier = Modifier.width(250.dp)
-
+                modifier = Modifier
+                    .width(250.dp)
+                    .padding(15.dp)
             )
             Text(
                 text = "${textFieldValue.text.length} / $maxLength",
@@ -85,18 +107,34 @@ fun TextFieldAddingData(
                 color = Black
             )
         }
+
+        val textSize = textFieldValue.text.length
+        val current = LocalContext.current
+
+        OutlinedButton(
+            onClick = {
+                if (textSize > 1) {
+                    cartViewModel.insertCart(
+                        DataCart(
+                            name = textFieldValue.text,
+                            isDone = isDoneCheck
+                        )
+                    )
+                    navController.navigate(Destination.Home.route)
+                } else {
+                    Toast.makeText(current, "You have to enter data", Toast.LENGTH_SHORT).show()
+                }
+
+            },
+            border = BorderStroke(2.dp, Black),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = Black),
+            modifier = Modifier.padding(top = 15.dp)
+
+        ) {
+            Text(fontSize = 18.sp, text = "Add data")
+        }
     }
-    OutlinedButton(
-        onClick = {
-            cartViewModel.insertCart(DataCart(name = textFieldValue.text, isDone = isDoneCheck))
-            navController.navigate(Destination.Home.route)
-        },
-        border = BorderStroke(2.dp, Black),
-        colors = ButtonDefaults.outlinedButtonColors(contentColor = Black),
-        modifier = Modifier.padding(top = 15.dp)
-    ) {
-        Text(fontSize = 18.sp, text = "Add data")
-    }
+
 }
 
 
